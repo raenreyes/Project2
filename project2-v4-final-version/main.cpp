@@ -5,18 +5,18 @@
 
 int rollDice();
 
-void initializePlayers(int &numPlayers, std::string *&names);
-void playGame(int numPlayers, std::string *names);
+void initializePlayers(int &numP, std::string *&names);
+void playGame(int numP, std::string *names);
 void cleanupPlayers(std::string *&names);
 void createPIN(int *pin, int size);
-bool validatePIN(int *pin, int *enteredPIN, int size);
+bool validatePIN(int *pin, int *enterP, int size);
 
 int main()
 {
 
     std::srand(static_cast<unsigned>(std::time(0)));
 
-    int numPlayers;
+    int numP;
     std::string *names = nullptr;
     char hello;
     char bankNum;
@@ -75,14 +75,14 @@ int main()
     do
     {
         std::cout << "Please enter your " << pinSize << "-digit PIN" << std::endl;
-        int enteredPIN[pinSize];
+        int enterP[pinSize];
         for (int i = 0; i < pinSize; ++i)
         {
             std::cout << "Enter digit " << i + 1 << ": ";
-            std::cin >> *(enteredPIN + 1);
+            std::cin >> *(enterP + 1);
         }
 
-        if (validatePIN(userPIN, enteredPIN, pinSize))
+        if (validatePIN(userPIN, enterP, pinSize))
         {
             std::cout << "Pin is Correct!!!" << std::endl
                       << "Enjoy your game with your friends!\n"
@@ -110,8 +110,8 @@ int main()
         << "By choosing 'y' you will play another round and by choosing 'n' the game will end and tell you the winners of the game." << std::endl
         << std::endl;
 
-    initializePlayers(numPlayers, names);
-    playGame(numPlayers, names);
+    initializePlayers(numP, names);
+    playGame(numP, names);
     cleanupPlayers(names);
 
     return 0;
@@ -121,36 +121,36 @@ int rollDice()
 {
     return rand() % 6 + 1;
 }
-void initializePlayers(int &numPlayers, std::string *&names)
+void initializePlayers(int &numP, std::string *&names)
 {
     do
     {
         std::cout << "Enter the number of players (2 or more): ";
-        std::cin >> numPlayers;
-        if (numPlayers < 2)
+        std::cin >> numP;
+        if (numP < 2)
         {
             std::cout << "Please enter a valid number of players so you can enjoy the game and have some fun!!!" << std::endl;
         }
 
-    } while (numPlayers < 2);
+    } while (numP < 2);
 
-    names = new std::string[numPlayers];
+    names = new std::string[numP];
 
-    for (int i = 0; i < numPlayers; i++)
+    for (int i = 0; i < numP; i++)
     {
         std::cout << "ENTER OPPONENT NUMBER " << i + 1 << ": ";
         std::cin >> *(names + i);
     }
 }
-void playGame(int numPlayers, std::string *names)
+void playGame(int numP, std::string *names)
 {
-    int *scores = new int[numPlayers]();
+    int *scores = new int[numP]();
 
     char playAgain;
 
     do
     {
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < numP; i++)
         {
             int result = rollDice();
             *(scores + i) += result;
@@ -222,7 +222,7 @@ void playGame(int numPlayers, std::string *names)
     int maxScore = scores[0];
     int winner = 0;
 
-    for (int i = 1; i < numPlayers; i++)
+    for (int i = 1; i < numP; i++)
     {
         if (*(scores + i) > maxScore)
         {
@@ -248,7 +248,7 @@ void createPIN(int *pin, int size)
     }
 }
 
-bool validatePIN(int *pin, int *enteredPIN, int size)
+bool validatePIN(int *pin, int *enterP, int size)
 {
     if (size != 4)
     {
@@ -257,7 +257,7 @@ bool validatePIN(int *pin, int *enteredPIN, int size)
 
     for (int i = 0; i < size; ++i)
     {
-        if (*(pin + 1) != *(enteredPIN + 1))
+        if (*(pin + 1) != *(enterP + 1))
         {
             return false;
         }

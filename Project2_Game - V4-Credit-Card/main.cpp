@@ -13,6 +13,7 @@ bool validatePIN(int *pin, int *enteredPIN, int size);
 
 int main()
 {
+
     std::srand(static_cast<unsigned>(std::time(0)));
 
     int numPlayers;
@@ -69,6 +70,8 @@ int main()
     std::cout << "Please Insert your credit card so you can pay for your new Dice Game. Insert your Credit card now and wait till it says enter Pin Number\n"
               << std::endl;
 
+    bool pinValid = false;
+
     do
     {
         std::cout << "Please enter your " << pinSize << "-digit PIN" << std::endl;
@@ -84,13 +87,13 @@ int main()
             std::cout << "Pin is Correct!!!" << std::endl
                       << "Enjoy your game with your friends!\n"
                       << std::endl;
-            break;
+            pinValid = true;
         }
         else
         {
             std::cout << "Invalid PIN! Please try again." << std::endl;
         }
-    } while (true);
+    } while (!pinValid);
 
     std::cout << "Awesome we got the new dice game lets go home a play it" << std::endl
               << std::endl;
